@@ -1,0 +1,27 @@
+# Conda Environment Specification
+# Conda manages: Python version, virtual environment, system dependencies
+# UV manages: All Python packages (see pyproject.toml)
+
+name: uv-conda-project
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Python interpreter (managed by Conda)
+  - python=3.11
+
+  # System-level dependencies (if needed)
+  # Examples:
+  # - cudatoolkit=11.8  # For GPU computing
+  # - mkl               # Intel Math Kernel Library
+  # - compilers         # C/C++ compilers
+
+  # NOTE: Do NOT add Python packages here!
+  # All Python packages are managed by UV in pyproject.toml
+
+  # Optional: pip for UV installation (if not globally installed)
+  # - pip
+  # - pip:
+  #   - uv  # Install UV itself via pip if needed
