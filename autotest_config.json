@@ -1,88 +1,104 @@
 {
-    "description": "Autotest configuration file for dependency tree detection validation",
-    "version": 1.1,
-    "base_config": {
-        "validate_scan_output": true,
-        "_comment_validate_scan_output": "Whether to validate the scan output/exit code. Options: true | false. Default: true",
-        "scan_output": {
-            "_security_scan_report_conclusion": "failure",
-            "_comment_security_scan_report_conclusion": "Optional. Expected scan report conclusion. Options: 'success' | 'failure'. This validates the security scan result status. If not provided, this check will not be performed.",
-            "total_libs_scanned": {
-                "gte": 32
-            },
-            "_comment_total_libs_scanned": "Expected number of libraries scanned with comparison operator. Validates that the scan processed libraries."
+  "description": "Autotest configuration file for dependency tree detection validation",
+  "version": 1.4,
+  "base_config": {
+    "validate_scan_output": true,
+    "_comment_validate_scan_output": "Whether to validate the scan output/exit code. Options: true | false. Default: true",
+    "scan_output": {
+      "_security_scan_report_conclusion": "failure",
+      "_comment_security_scan_report_conclusion": "Optional. Expected scan report conclusion. Options: \u0027success\u0027 | \u0027failure\u0027. This validates the security scan result status. If not provided, this check will not be performed.",
+      "total_libs_scanned": {
+        "gte": 32
+      },
+      "_comment_total_libs_scanned": "Expected number of libraries scanned with comparison operator. Validates that the scan processed libraries."
+    },
+    "validate_dependency_tree": true,
+    "_comment_validate_dependency_tree": "Whether to validate the dependency tree. Options: true | false. Default: true",
+    "dependency_tree": {
+      "check_dependency_tree_detection_status": true,
+      "_comment_check_dependency_tree_detection_status": "Whether to check if dependency tree was successfully detected. Options: true | false. Default: true",
+      "expected_total_dependencies_number": {
+        "gte": 32
+      },
+      "expected_direct_dependencies_number": {
+        "gte": 8
+      },
+      "expected_transitive_dependencies_number": {
+        "gte": 24
+      },
+      "_comment_expected_dependencies_number": "Optional. Expected number of dependencies with comparison operator. Operators: gt (\u003e), gte (\u003e\u003d), lt (\u003c), lte (\u003c\u003d), eq (\u003d\u003d). If not provided, this check will not be performed.",
+      "direct_dependencies_names_list": {
+        "contains": [
+          "numpy",
+          "pip",
+          "requests",
+          "python",
+          "scikit-learn",
+          "matplotlib",
+          "pandas",
+          "readline"
+        ]
+      },
+      "transitive_dependencies_names_list": {
+        "contains": [
+          "numpy",
+          "python-dateutil",
+          "idna",
+          "cycler",
+          "charset-normalizer",
+          "fonttools",
+          "urllib3",
+          "pillow",
+          "scipy",
+          "tzdata",
+          "six",
+          "joblib",
+          "packaging",
+          "kiwisolver",
+          "certifi",
+          "pytz",
+          "pyparsing",
+          "threadpoolctl",
+          "contourpy"
+        ]
+      },
+      "_comment_dependencies_names_list": "Optional. Check specific libraries in direct dependencies. Operators: eq (\u003d\u003d), contains (all items from expected list in actual), in(all items from actual list in expected), nin(actual list does not contain provided libs). If not provided, this check will not be performed.",
+      "validate_agent_versions": true,
+      "expected_agent_version": "",
+      "expected_plugin_version": "",
+      "_comment_agent_versions": "Optional. Expected agent and plugin versions. If not provided, this check will not be performed."
+    },
+    "validate_vulnerabilities_table": true,
+    "_comment_validate_vulnerabilities_table": "Whether to validate the vulnerabilities table. Options: true | false. Default: true",
+    "vulnerabilities_table": {
+      "check_vulnerabilities_table_structure": true,
+      "expected_total_vulnerabilities_number": {
+        "gte": 0
+      },
+      "vulnerabilities_ids_list": {
+        "contains": []
+      },
+      "_comment_ids_names_list": "Optional. Check specific libs ids (WS-2018-0111, CVE-2021-44906). Operators: eq (\u003d\u003d), contains (all items from expected list in actual), in(all items from actual list in expected), nin(actual list does not contain provided libs). If not provided, this check will not be performed.",
+      "vulnerabilities_names_list": {
+        "contains": []
+      },
+      "_comment_vulnerabilities_names_list": "Optional. Check specific libs names (minimist-0.0.8.tgz). Operators: eq (\u003d\u003d), contains (all items from expected list in actual), in(all items from actual list in expected), nin(actual list does not contain provided libs). If not provided, this check will not be performed."
+    },
+    "validate_scanner_logs": true,
+    "logs": {
+      "check_scanner_logs": true,
+      "_comment_check_scanner_logs": "Whether to check scanner logs and attach them to Report Portal. Options: true | false. Default: true",
+      "expected_log_lines": [
+        {
+          "operator": "eq",
+          "value": "Will apply conda activation for UV sync"
         },
-        "validate_dependency_tree": true,
-        "_comment_validate_dependency_tree": "Whether to validate the dependency tree. Options: true | false. Default: true",
-        "dependency_tree": {
-            "check_dependency_tree_detection_status": true,
-            "_comment_check_dependency_tree_detection_status": "Whether to check if dependency tree was successfully detected. Options: true | false. Default: true",
-            "expected_total_dependencies_number": {
-                "gte": 32
-            },
-            "expected_direct_dependencies_number": {
-                "gte": 8
-            },
-            "expected_transitive_dependencies_number": {
-                "gte": 24
-            },
-            "_comment_expected_dependencies_number": "Optional. Expected number of dependencies with comparison operator. Operators: gt (>), gte (>=), lt (<), lte (<=), eq (==). If not provided, this check will not be performed.",
-            "direct_dependencies_names_list": {
-                "contains": [
-                    "numpy",
-                    "pip",
-                    "requests",
-                    "python",
-                    "scikit-learn",
-                    "matplotlib",
-                    "pandas",
-                    "readline"
-                ]
-            },
-            "transitive_dependencies_names_list": {
-                "contains": [
-                    "numpy", 
-                    "python-dateutil", 
-                    "idna",
-                    "cycler", 
-                    "charset-normalizer", 
-                    "fonttools", 
-                    "urllib3", 
-                    "pillow", 
-                    "scipy",
-                    "tzdata",
-                    "six", 
-                    "joblib", 
-                    "packaging", 
-                    "kiwisolver", 
-                    "certifi", 
-                    "pytz",
-                    "pyparsing", 
-                    "threadpoolctl", 
-                    "contourpy" 
-                ]
-            },
-            "_comment_dependencies_names_list": "Optional. Check specific libraries in direct dependencies. Operators: eq (==), contains (all items from expected list in actual), in(all items from actual list in expected), nin(actual list does not contain provided libs). If not provided, this check will not be performed.",
-            "validate_agent_versions": true,
-            "expected_agent_version": "",
-            "expected_plugin_version": "",
-            "_comment_agent_versions": "Optional. Expected agent and plugin versions. If not provided, this check will not be performed."
-        },
-        "validate_vulnerabilities_table": true,
-        "_comment_validate_vulnerabilities_table": "Whether to validate the vulnerabilities table. Options: true | false. Default: true",
-        "vulnerabilities_table": {
-            "check_vulnerabilities_table_structure": true,
-            "expected_total_vulnerabilities_number": {
-                "gte": 0
-            },
-            "vulnerabilities_ids_list": {
-                "contains": []
-            },
-            "_comment_ids_names_list": "Optional. Check specific libs ids (WS-2018-0111, CVE-2021-44906). Operators: eq (==), contains (all items from expected list in actual), in(all items from actual list in expected), nin(actual list does not contain provided libs). If not provided, this check will not be performed.",
-            "vulnerabilities_names_list": {
-                "contains": []
-            },
-            "_comment_vulnerabilities_names_list": "Optional. Check specific libs names (minimist-0.0.8.tgz). Operators: eq (==), contains (all items from expected list in actual), in(all items from actual list in expected), nin(actual list does not contain provided libs). If not provided, this check will not be performed."
+        {
+          "operator": "regex",
+          "value": "Conda environment created successfully at /tmp/ws-scm/.*uv_with_conda_env/\\.venv"
         }
+      ],
+      "_comment_expected_log_lines": "Optional. List of log lines to validate. Each entry should have an \u0027operator\u0027 (eq or regex) and \u0027value\u0027 (string or regex pattern). Example: [{\u0027operator\u0027: \u0027eq\u0027, \u0027value\u0027: \u0027Python version: 3.11\u0027}, {\u0027operator\u0027: \u0027regex\u0027, \u0027value\u0027: \u0027Python version: \\d+\\.\\d+\u0027}]. If not provided, only log attachment will be performed."
     }
+  }
 }
